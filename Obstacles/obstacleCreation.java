@@ -1,0 +1,69 @@
+package Obstacles;
+
+import Bullet.BulletPlayer;
+import Enemy.TrackedEntity;
+import Player.Player;
+import Results.resultBoard;
+import utils.CollisionUtils;
+
+import java.awt.*;
+import java.util.ArrayList;
+
+public final class obstacleCreation {
+    public static void create_obstacle(int[][] coordinates , String obstacle_type){
+        for (int i=0 ; i < coordinates.length ; i++){
+            if (obstacle_type.equals("Wall")){
+                new TrackedEntity<>(new Wall(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
+            }else if (obstacle_type.equals("Laser")){
+                new TrackedEntity<>(new Laser(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
+            }else if (obstacle_type.equals("Mine")){
+                new TrackedEntity<>(new Mine(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
+            }else {
+                throw new IllegalArgumentException("Unknown obstacle_type \"" + obstacle_type + "\" - expected \"Wall\", \"Laser\", or \"Mine\"");
+            }
+        }
+    }
+
+    public static void obstacle_drawing(Graphics graphic){
+
+        for (int i=0; i < TrackedEntity.getAllEntity().size();i++){
+            Object content = TrackedEntity.getAllEntity().get(i).getContent();
+            if (content instanceof Mine mine){
+                graphic.setColor(Color.yellow);
+                graphic.fillOval(mine.getCoordinates_x(),mine.getCoordinates_y(),
+                        mine.getWidth(),mine.getHeight());
+                graphic.drawImage(Mine.getMine_img(),mine.getCoordinates_x()+mine.getWidth()/4
+                        ,mine.getCoordinates_y(),null);
+                if (CollisionUtils.Intersect(Player.getPlayer(), mine)){
+                    resultBoard.setHealth(mine.damage());
+                    TrackedEntity.removeEntity(TrackedEntity.getAllEntity().get(i));
+                }
+                for (int j = 0; j< BulletPlayer.getBullet_player_list().size(); j++){
+                    if (CollisionUtils.Intersect(BulletPlayer.getBullet_player_list().get(j), mine)){
+                        BulletPlayer.remove_bullet(BulletPlayer.getBullet_player_list().get(j));
+                    }
+                }
+            }else if (content instanceof Obstacle obstacle )
+                {
+                    if (obstacle instanceof Laser){
+                        graphic.setColor(Color.red);
+                    }else {
+                        graphic.setColor(Color.blue);
+                    }
+                    graphic.fillRect(obstacle.getCoordinates_x(), obstacle.getCoordinates_y(),
+                        obstacle.getWidth(), obstacle.getHeight());
+                if (CollisionUtils.Intersect(Player.getPlayer(), obstacle)) {
+                    Player.getPlayer().setCoordinates_x(Player.getPlayer().getCoordinates_x() - 15);
+                    if (obstacle instanceof Laser laser){
+                        resultBoard.setHealth(laser.damage());
+                    }
+                }
+                for (int j = 0; j < BulletPlayer.getBullet_player_list().size(); j++) {
+                    if (CollisionUtils.Intersect(BulletPlayer.getBullet_player_list().get(j),obstacle)) {
+                        BulletPlayer.remove_bullet(BulletPlayer.getBullet_player_list().get(j));
+                    }
+                }
+            } }
+    }
+
+}
