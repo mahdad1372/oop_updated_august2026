@@ -4,11 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import Obstacles.Wall;
+import Obstacles.obstacleCreation;
+import Panel.MyPanel;
 public class resultBoard {
     private static JButton easyButton;
     private static JButton mediumButton;
     private static JButton hardButton;
-
     public resultBoard(int x , int y , int width, int height, String result_board_type){
         this.boardCoordinates_x = x;
         this.boardCoordinates_y = y;
@@ -16,7 +18,6 @@ public class resultBoard {
         this.height = height;
         this.result_board_type = result_board_type;
     }
-
     private int boardCoordinates_x;
     private int boardCoordinates_y;
     private final int width;
@@ -76,7 +77,6 @@ public class resultBoard {
         easyButton.setVisible(false);
         mediumButton.setVisible(false);
         hardButton.setVisible(false);
-
     }
 
     public static Object[][] getLabelCoordinates(){
@@ -166,6 +166,7 @@ public class resultBoard {
     public static void setDifficulty(String difficultyName, int startingHealth) {
         difficulty = difficultyName;
         health = startingHealth;
+        MyPanel.creation();
     }
     public static int getSeconds_Duration_Game() {
         return Seconds_Duration_Game;

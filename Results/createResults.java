@@ -41,7 +41,6 @@ public final class createResults {
 
         if (resultBoard.getDisplay_name_menu() || resultBoard.getDisplay_difficulty_menu()
                 || resultBoard.getdisplay_menu_winner() || resultBoard.getHealth() <= 0){
-            // dim the game behind the end-screen card
             Rectangle clip = graphics.getClipBounds();
             if (clip == null){
                 clip = new Rectangle(0, 0, 950, 400);
@@ -96,17 +95,11 @@ public final class createResults {
                     resultBoard board = resultBoard.getResult_boards().get(i);
                     int cardX = board.getBoardCoordinates_x();
                     int cardY = board.getBoardCoordinates_y();
-
-                    // card background
                     graphics.setColor(new Color(30, 60, 90));
                     graphics.fillRoundRect(cardX, cardY, board.getWidth(), board.getHeight(), 20, 20);
                     graphics.setColor(Color.ORANGE);
                     ((Graphics2D) graphics).setStroke(new BasicStroke(4));
                     graphics.drawRoundRect(cardX, cardY, board.getWidth(), board.getHeight(), 20, 20);
-
-                    // title - the actual Easy/Medium/Hard choices are real JButtons that
-                    // MyPanel positions over this card (see easyButton/mediumButton/hardButton),
-                    // shown once the name has been entered.
                     graphics.setFont(new Font("Arial", Font.BOLD, 25));
                     graphics.setColor(Color.WHITE);
                     graphics.drawString("Choose your difficulty", 330, cardY + 60);
@@ -137,22 +130,14 @@ public final class createResults {
         int cardY = board.getBoardCoordinates_y();
         int cardWidth = board.getWidth();
         int cardHeight = board.getHeight();
-
-        // card background
         graphics.setColor(cardColor);
         graphics.fillRoundRect(cardX, cardY, cardWidth, cardHeight, 20, 20);
-
-        // accent border
         graphics.setColor(accentColor);
         ((Graphics2D) graphics).setStroke(new BasicStroke(4));
         graphics.drawRoundRect(cardX, cardY, cardWidth, cardHeight, 20, 20);
-
-        // title
         graphics.setFont(new Font("Arial", Font.BOLD, 25));
         graphics.setColor(Color.WHITE);
         graphics.drawString(title, 380, cardY + 70);
-
-        // stats
         graphics.setFont(new Font("Arial", Font.BOLD, 20));
         String displayName = resultBoard.getPlayerName().isEmpty() ? "Player" : resultBoard.getPlayerName();
         String difficultySuffix = resultBoard.getDifficulty().isEmpty() ? "" : " on " + resultBoard.getDifficulty();

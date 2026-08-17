@@ -15,26 +15,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MyPanel extends JPanel implements KeyListener {
+public class MyPanel extends JPanel {
     public MyPanel(){
         panelDetails.details(this);
         creation();
         resultBoard.setupDifficultyButtons(this);
     }
-    public void creation(){
-        try {
-            Enemycreation.create_TankEnemy();
-            Enemycreation.create_thief();
-        } catch (InvalidGameDataException e) {
-            e.printStackTrace();
-        }
-        obstacleCreation.create_obstacle(Wall.wall_coordinates,"Wall");
-        obstacleCreation.create_obstacle(Laser.getLaser_coordinates(),"Laser");
-        obstacleCreation.create_obstacle(Mine.getMineCoordinates(),"Mine");
-        Enemycreation.create_missile_launcher();
+    public static void creation(){
         resultBoard.setResult_boards(createResults.creating_result_board(resultBoard.getResultBoardCoordinates()));
-        Enemycreation.createSniperEnemy();
         Player.setPlayer(PlayerCreation.create_player());
+        if (!resultBoard.getDifficulty().isEmpty()){
+            try {
+                Enemycreation.create_TankEnemy();
+                Enemycreation.create_thief();
+                Enemycreation.createMissileLauncher();
+                Enemycreation.createSniperEnemy();
+                obstacleCreation.create_obstacle(Wall.getWallCoordinates(),"Wall");
+                obstacleCreation.create_obstacle(Laser.getLaser_coordinates(),"Laser");
+                obstacleCreation.create_obstacle(Mine.getMineCoordinates(),"Mine");
+            } catch (InvalidGameDataException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -47,38 +49,5 @@ public class MyPanel extends JPanel implements KeyListener {
         PlayerCreation.Bullet_player_drawing(graphics,BulletPlayer.getBullet_player_list());
         createResults.lableDrawing(graphics, resultBoard.getLabelCoordinates());
         createResults.ResultBoardDrawing(graphics);
-    }
-    @Override
-    public void keyTyped(KeyEvent e) {
-        if (resultBoard.getDisplay_name_menu()){
-            char c = e.getKeyChar();
-            if (Character.isLetterOrDigit(c) || c == ' '){
-                resultBoard.appendTypedNameChar(c);
-            }
-        }
-    }
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int keycode = e.getKeyCode();
-        if (resultBoard.getDisplay_name_menu()){
-            if (keycode == KeyEvent.VK_BACK_SPACE){
-                resultBoard.removeLastTypedNameChar();
-            } else if (keycode == KeyEvent.VK_ENTER){
-                String name = resultBoard.getTypedName().trim();
-                if (!name.isEmpty()){
-                    resultBoard.setPlayerName(name);
-                    resultBoard.setDisplay_name_menu(false);
-                    resultBoard.setDisplay_difficulty_menu(true);
-                    resultBoard.showDifficultyButtons();
-                }
-            }
-        } else {
-            PlayerCreation.player_movement(keycode);
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 }

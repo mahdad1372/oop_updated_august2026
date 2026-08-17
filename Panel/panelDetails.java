@@ -13,7 +13,7 @@ public final class panelDetails {
     public static Timer executing_game_timer;
     public static Timer Game_Timer;
     public static void details(MyPanel panel){
-        panel.addKeyListener(panel);
+        panel.addKeyListener(new GamePanelKeyListener());
         panel.setFocusable(true);
         panel.setVisible(true);
         panel.setBackground(Color.white);

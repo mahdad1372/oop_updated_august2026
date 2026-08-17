@@ -13,19 +13,18 @@ import static Enemy.thief.getThief_list;
 
 public final class Enemycreation {
 
-    public static ArmyEnemy create_TankEnemy() throws InvalidGameDataException {
+    public static void create_TankEnemy() throws InvalidGameDataException {
         Tank_rocket rocket;
         try {
             rocket = new Tank_rocket((Integer) Tank_rocket.getTanks_rocket_coordinates()[0][0],
                     (Integer) Tank_rocket.getTanks_rocket_coordinates()[0][1], (Image) Tank_rocket.getTanks_rocket_coordinates()[0][2],
                     (Integer) Tank_rocket.getTanks_rocket_coordinates()[0][3], (Integer) Tank_rocket.getTanks_rocket_coordinates()[0][4]);
+            ArmyEnemy tank = new TankEnemy(TankEnemy.getTank_img(), 580, 250, 40, 40, rocket, "up");
+            new TrackedEntity<>(tank);
+            tank.Shooting_Rocket();
         } catch (ClassCastException e) {
             throw new InvalidGameDataException("Tanks_rocket_coordinates row 0 has a value of the wrong type", e);
         }
-        ArmyEnemy tank = new TankEnemy(TankEnemy.getTank_img(), 580, 250, 40, 40, rocket, "up");
-        new TrackedEntity<>(tank);
-        tank.Shooting_Rocket();
-        return tank;
     }
 
     public static void create_thief() throws InvalidGameDataException {
@@ -40,19 +39,26 @@ public final class Enemycreation {
         }
       }
 
-    public static ArmyEnemy create_missile_launcher(){
-        Missile missile = new Missile(160,310,Missile.getmissile_img(),270,200);
-        ArmyEnemy missile_launcher = new Missile_launcher(160,300,Missile_launcher.getMissile_launcher(),30,30,missile,"up");
-        new TrackedEntity<>(missile_launcher);
-        missile_launcher.Shooting_Rocket();
-        return missile_launcher;
+    public static void createMissileLauncher() throws InvalidGameDataException{
+        try {
+            Missile missile = new Missile(160,310,Missile.getmissile_img(),270,200);
+            ArmyEnemy missile_launcher = new Missile_launcher(160,300,Missile_launcher.getMissile_launcher(),30,30,missile,"up");
+            new TrackedEntity<>(missile_launcher);
+            missile_launcher.Shooting_Rocket();
+        } catch (ClassCastException e) {
+            throw new InvalidGameDataException("thief_coordinates row has a value of the wrong type", e);
+        }
+
     };
-    public static ArmyEnemy createSniperEnemy(){
-        SniperBullet bullet = new SniperBullet(470,10,SniperBullet.getSniperBullet_img(),470,230);
-        ArmyEnemy sniper_enemy = new ArmyEnemy(SniperEnemy.getSniperImage(),470,10,20,20,bullet,"down");
-        new TrackedEntity<>(sniper_enemy);
-        sniper_enemy.Shooting_Rocket();
-        return sniper_enemy;
+    public static void createSniperEnemy() throws InvalidGameDataException{
+        try {
+            SniperBullet bullet = new SniperBullet(470,10,SniperBullet.getSniperBullet_img(),470,230);
+            ArmyEnemy sniper_enemy = new ArmyEnemy(SniperEnemy.getSniperImage(),470,10,20,20,bullet,"down");
+            new TrackedEntity<>(sniper_enemy);
+            sniper_enemy.Shooting_Rocket();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void drawAllEnemies(Graphics g) {
@@ -85,6 +91,7 @@ public final class Enemycreation {
     }
 
     public static void drawThiefEnemy(Graphics g){
+        System.out.println("Good boy");
         for (int i = 0; i < TrackedEntity.getAllEntity().size(); i++) {
             Object content = TrackedEntity.getAllEntity().get(i).getContent();
             if (content instanceof thief thief) {

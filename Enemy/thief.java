@@ -3,7 +3,7 @@ package Enemy;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
+import Results.resultBoard;
 public class thief extends Enemy{
     public thief(Image enemy_img,int coordinates_x, int coordinates_y ,int width, int height,String direction, int final_position){
         super(enemy_img,coordinates_x,coordinates_y,width,height);
@@ -22,7 +22,17 @@ public class thief extends Enemy{
     private boolean increase_coordinates_y = true;
     private boolean increase_coordinates_x = true;
     public final static Image thief_img = new ImageIcon("Assets/thief.png").getImage();
-    private final static Object[][] thief_coordinates = {
+    private final static Object[][] thief_coordinates_Easy_level = {
+            {thief_img,200,70,30,30,"Y",320},
+            {thief_img,390,165,30,30,"X",120},
+    };
+    private final static Object[][] thief_coordinates_Medium_level = {
+            {thief_img,200,70,30,30,"Y",320},
+            {thief_img,390,165,30,30,"X",120},
+            {thief_img,350,310,30,30,"Y",120},
+            {thief_img,595,140,30,30,"X",450},
+    };
+    private final static Object[][] thief_coordinates_Hard_level = {
         {thief_img,200,70,30,30,"Y",320},
         {thief_img,390,165,30,30,"X",120},
         {thief_img,350,310,30,30,"Y",120},
@@ -52,7 +62,14 @@ public class thief extends Enemy{
 
     }
     public static Object[][] getThief_list(){
-        return  thief_coordinates;
+        String difficulty_level = resultBoard.getDifficulty();
+        if (difficulty_level.equals("Easy")){
+            return thief_coordinates_Easy_level;
+        } else if (difficulty_level.equals("Medium")) {
+            return thief_coordinates_Medium_level;
+        }else {
+            return thief_coordinates_Hard_level;
+        }
     }
     @Override
     public int killing_enemy_score(){

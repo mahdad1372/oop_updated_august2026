@@ -2,6 +2,7 @@ package Obstacles;
 
 import Bullet.BulletPlayer;
 import Enemy.TrackedEntity;
+import Exceptions.InvalidGameDataException;
 import Player.Player;
 import Results.resultBoard;
 import utils.CollisionUtils;
@@ -10,22 +11,25 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public final class obstacleCreation {
-    public static void create_obstacle(int[][] coordinates , String obstacle_type){
+    public static void create_obstacle(int[][] coordinates , String obstacle_type) throws InvalidGameDataException {
         for (int i=0 ; i < coordinates.length ; i++){
-            if (obstacle_type.equals("Wall")){
-                new TrackedEntity<>(new Wall(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
-            }else if (obstacle_type.equals("Laser")){
-                new TrackedEntity<>(new Laser(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
-            }else if (obstacle_type.equals("Mine")){
-                new TrackedEntity<>(new Mine(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
-            }else {
-                throw new IllegalArgumentException("Unknown obstacle_type \"" + obstacle_type + "\" - expected \"Wall\", \"Laser\", or \"Mine\"");
+            try {
+                if (obstacle_type.equals("Wall")){
+                    new TrackedEntity<>(new Wall(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
+                }else if (obstacle_type.equals("Laser")){
+                    new TrackedEntity<>(new Laser(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
+                }else if (obstacle_type.equals("Mine")){
+                    new TrackedEntity<>(new Mine(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
+                }else {
+                    throw new IllegalArgumentException("Unknown obstacle_type \"" + obstacle_type + "\" - expected \"Wall\", \"Laser\", or \"Mine\"");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
     public static void obstacle_drawing(Graphics graphic){
-
         for (int i=0; i < TrackedEntity.getAllEntity().size();i++){
             Object content = TrackedEntity.getAllEntity().get(i).getContent();
             if (content instanceof Mine mine){
