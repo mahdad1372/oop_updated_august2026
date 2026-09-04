@@ -20,7 +20,13 @@ public final class Player implements Enemy_hit {
     private static final Image player_u = new ImageIcon("Assets/soldier_u.png").getImage();
     private static final Image player_r = new ImageIcon("Assets/soldier.png").getImage();
     private static Image player_img =  new ImageIcon("Assets/soldier.png").getImage();;
+    private final static Object[][] coordinates_player ={
+            {0,0}
+    };
 
+    public static Object[][] getCoordinates_player(){
+        return coordinates_player;
+    }
     @Override
     public int getWidth(){
         return 30;

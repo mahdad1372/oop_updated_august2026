@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Rocket_Bullet extends Bullet{
-    public Rocket_Bullet(int coordinates_x, int coordinates_y, Image Rocket_bullet_img,int final_coordinates_x, int final_coordinates_y ){
+    public Rocket_Bullet(Image Rocket_bullet_img,int coordinates_x, int coordinates_y, int final_coordinates_x, int final_coordinates_y ){
         super(coordinates_x,coordinates_y,Rocket_bullet_img);
         this.final_coordinates_x= final_coordinates_x;
         this.final_coordinates_y= final_coordinates_y;

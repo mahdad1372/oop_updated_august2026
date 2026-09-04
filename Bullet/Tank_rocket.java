@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Tank_rocket extends Rocket_Bullet{
-    public Tank_rocket(int coordinate_x , int coordinate_y, Image tank_rocket, int final_position_x, int final_position_y){
-        super(coordinate_x,coordinate_y,tank_rocket,final_position_x,final_position_y);
+    public Tank_rocket(Image tank_rocket,int coordinate_x , int coordinate_y,  int final_position_x, int final_position_y){
+        super(tank_rocket,coordinate_x,coordinate_y,final_position_x,final_position_y);
     }
 
     private static final Image Tank_rocket = new ImageIcon("Assets/tank_rocket.png").getImage();

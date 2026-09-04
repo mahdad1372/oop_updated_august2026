@@ -1,25 +1,24 @@
 package Obstacles;
 
 import Bullet.BulletPlayer;
-import Enemy.TrackedEntity;
 import Exceptions.InvalidGameDataException;
 import Player.Player;
 import Results.resultBoard;
 import utils.CollisionUtils;
 
 import java.awt.*;
-import java.util.ArrayList;
+
 
 public final class obstacleCreation {
     public static void create_obstacle(int[][] coordinates , String obstacle_type) throws InvalidGameDataException {
         for (int i=0 ; i < coordinates.length ; i++){
             try {
                 if (obstacle_type.equals("Wall")){
-                    new TrackedEntity<>(new Wall(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
+                    new TrackedObstacle<>(new Wall(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
                 }else if (obstacle_type.equals("Laser")){
-                    new TrackedEntity<>(new Laser(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
+                    new TrackedObstacle<>(new Laser(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
                 }else if (obstacle_type.equals("Mine")){
-                    new TrackedEntity<>(new Mine(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
+                    new TrackedObstacle<>(new Mine(coordinates[i][0], coordinates[i][1], coordinates[i][2], coordinates[i][3]));
                 }else {
                     throw new IllegalArgumentException("Unknown obstacle_type \"" + obstacle_type + "\" - expected \"Wall\", \"Laser\", or \"Mine\"");
                 }
@@ -30,8 +29,8 @@ public final class obstacleCreation {
     }
 
     public static void obstacle_drawing(Graphics graphic){
-        for (int i=0; i < TrackedEntity.getAllEntity().size();i++){
-            Object content = TrackedEntity.getAllEntity().get(i).getContent();
+        for (int i=0; i < TrackedObstacle.getAllObstacles().size();i++){
+            Object content = TrackedObstacle.getAllObstacles().get(i).getObstacle();
             if (content instanceof Mine mine){
                 graphic.setColor(Color.yellow);
                 graphic.fillOval(mine.getCoordinates_x(),mine.getCoordinates_y(),
@@ -40,7 +39,7 @@ public final class obstacleCreation {
                         ,mine.getCoordinates_y(),null);
                 if (CollisionUtils.Intersect(Player.getPlayer(), mine)){
                     resultBoard.setHealth(mine.damage());
-                    TrackedEntity.removeEntity(TrackedEntity.getAllEntity().get(i));
+                    TrackedObstacle.removeObstacles(TrackedObstacle.getAllObstacles().get(i));
                 }
                 for (int j = 0; j< BulletPlayer.getBullet_player_list().size(); j++){
                     if (CollisionUtils.Intersect(BulletPlayer.getBullet_player_list().get(j), mine)){

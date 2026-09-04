@@ -12,38 +12,37 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ArmyEnemy extends Enemy implements Army_enemy_details {
-    public ArmyEnemy(Image enemy_image, int coordinates_x, int coordinates_y,  int width, int height, Rocket_Bullet rocketBullet,String shooting_direction){
+    public ArmyEnemy(Image enemy_image, int coordinates_x, int coordinates_y,  int width, int height,String shooting_direction,Rocket_Bullet rocketBullet){
         super(enemy_image,coordinates_x,coordinates_y,width,height);
         this.rocketBullet = rocketBullet;
         this.shooting_direction = shooting_direction;
     }
-    private String shooting_direction;
-    private Rocket_Bullet rocketBullet;
-    private ArrayList<Rocket_Bullet> Rocketbullet_List = new ArrayList<>();
+    private final String shooting_direction;
+    private final Rocket_Bullet rocketBullet;
+    private final ArrayList<Rocket_Bullet> Rocketbullet_List = new ArrayList<>();
 
     @Override
-    public void Shooting_Rocket(){
+    public void shootingRocket(){
     java.util.Timer timer = new Timer();
     TimerTask task = new TimerTask() {
         @Override
         public void run() {
-            Rocketbullet_List.add(new Rocket_Bullet(rocketBullet.getPosition_coordinates_x(),rocketBullet.getPosition_coordinates_y(),
-                    rocketBullet.getRocket_bullet_img(),rocketBullet.getFinal_coordinates_x(),rocketBullet.getFinal_coordinates_y()));
+            Rocketbullet_List.add(new Rocket_Bullet(rocketBullet.getRocket_bullet_img(),rocketBullet.getPosition_coordinates_x(),rocketBullet.getPosition_coordinates_y(),
+                    rocketBullet.getFinal_coordinates_x(),rocketBullet.getFinal_coordinates_y()));
         }
     };
     timer.schedule(task,0,1500);
     }
     @Override
-    public void EditRocket_List(){
+    public void editRocketList(){
         for (int i=0; i < Rocketbullet_List.size();i++){
             if (Rocketbullet_List.get(i).getPosition_coordinates_y() == Rocketbullet_List.get(i).getFinal_coordinates_y()){
                 Rocketbullet_List.remove(i);
             }
         }
-
     }
     @Override
-    public ArrayList<? extends Bullet> getRocket_List(){
+    public ArrayList<? extends Bullet> getRocketList(){
         return Rocketbullet_List;
     }
     @Override

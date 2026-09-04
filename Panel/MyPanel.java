@@ -30,6 +30,7 @@ public class MyPanel extends JPanel {
                 Enemycreation.create_thief();
                 Enemycreation.createMissileLauncher();
                 Enemycreation.createSniperEnemy();
+                Enemycreation.createSoldierEnemy();
                 obstacleCreation.create_obstacle(Wall.getWallCoordinates(),"Wall");
                 obstacleCreation.create_obstacle(Laser.getLaser_coordinates(),"Laser");
                 obstacleCreation.create_obstacle(Mine.getMineCoordinates(),"Mine");
@@ -45,8 +46,8 @@ public class MyPanel extends JPanel {
         Enemycreation.drawAllEnemies(graphics);
         Enemycreation.drawThiefEnemy(graphics);
         obstacleCreation.obstacle_drawing(graphics);
-        PlayerCreation.player_drawing(graphics,Player.getPlayer());
-        PlayerCreation.Bullet_player_drawing(graphics,BulletPlayer.getBullet_player_list());
+        PlayerCreation.draw(graphics,Player.getPlayer());
+        PlayerCreation.draw(graphics,BulletPlayer.getBullet_player_list());
         createResults.lableDrawing(graphics, resultBoard.getLabelCoordinates());
         createResults.ResultBoardDrawing(graphics);
     }

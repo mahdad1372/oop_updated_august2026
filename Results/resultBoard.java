@@ -32,7 +32,7 @@ public class resultBoard {
     private static String playerName = "";
     private static String difficulty = "";
     private static StringBuilder typedName = new StringBuilder();
-    private static ArrayList<resultBoard> Result_boards = new ArrayList<resultBoard>();
+    private static ArrayList<resultBoard> Result_boards = new ArrayList<>();
     private final String result_board_type ;
     private static final Object[][] labelCoordinates = {
             {750,100, Color.blue,"score"},
@@ -52,8 +52,6 @@ public class resultBoard {
         mediumButton.setBounds(390, 150, 150, 50);
         hardButton = new JButton("Hard");
         hardButton.setBounds(620, 150, 150, 50);
-
-        // hidden until the name has been entered - shown by showDifficultyButtons() below
         easyButton.setVisible(false);
         mediumButton.setVisible(false);
         hardButton.setVisible(false);
@@ -112,14 +110,6 @@ public class resultBoard {
     public int getBoardCoordinates_y() {
         return boardCoordinates_y;
     }
-
-    public void setBoardCoordinates_x(int boardCoordinates_x) {
-        this.boardCoordinates_x = boardCoordinates_x;
-    }
-
-    public void setBoardCoordinates_y(int boardCoordinates_y) {
-        this.boardCoordinates_y = boardCoordinates_y;
-    }
     public static boolean getdisplay_menu_winner() {
         return display_menu_winner;
     }
@@ -147,7 +137,7 @@ public class resultBoard {
         }
     }
     public static void removeLastTypedNameChar() {
-        if (typedName.length() > 0){
+        if (!typedName.isEmpty()){
             typedName.deleteCharAt(typedName.length() - 1);
         }
     }
@@ -160,9 +150,6 @@ public class resultBoard {
     public static String getDifficulty() {
         return difficulty;
     }
-    // Sets the difficulty label AND the game's starting health in one call, since
-    // the two are meant to move together. Distinct from setHealth(int damage),
-    // which subtracts damage rather than assigning a value directly.
     public static void setDifficulty(String difficultyName, int startingHealth) {
         difficulty = difficultyName;
         health = startingHealth;
@@ -178,7 +165,7 @@ public class resultBoard {
         return result_board_type;
     }
     public static void setNumber_enemy_killed(int number) {
-        number_enemy_killed = number;
+        number_enemy_killed += number;
     }
     public static void setSeconds_Duration_Game(int seconds_Duration_Game) {
         Seconds_Duration_Game = seconds_Duration_Game;
@@ -198,9 +185,6 @@ public class resultBoard {
         this.height = height;
     }
     public static String get_num_enemy_time(int enemy_num , int time){
-        return  "In the " + time + " seconds you have killed " + enemy_num + " enemies" ;
-    }
-    public static String get_num_enemy_time(double enemy_num , double time){
         return  "In the " + time + " seconds you have killed " + enemy_num + " enemies" ;
     }
 }

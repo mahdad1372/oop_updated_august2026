@@ -1,7 +1,5 @@
 package Results;
-
 import Player.Player;
-
 import java.awt.*;
 import java.util.ArrayList;
 import Panel.panelDetails;
@@ -55,33 +53,22 @@ public final class createResults {
                     resultBoard board = resultBoard.getResult_boards().get(i);
                     int cardX = board.getBoardCoordinates_x();
                     int cardY = board.getBoardCoordinates_y();
-
-                    // card background
                     graphics.setColor(new Color(30, 60, 90));
                     graphics.fillRoundRect(cardX, cardY, board.getWidth(), board.getHeight(), 20, 20);
                     graphics.setColor(Color.CYAN);
                     ((Graphics2D) graphics).setStroke(new BasicStroke(4));
                     graphics.drawRoundRect(cardX, cardY, board.getWidth(), board.getHeight(), 20, 20);
-
-                    // title
                     graphics.setFont(new Font("Arial", Font.BOLD, 25));
                     graphics.setColor(Color.WHITE);
                     graphics.drawString("Please add your name", 380, cardY + 70);
-
-                    // hand-drawn input box - a filled rectangle standing in for a text field
                     int boxX = cardX + 220, boxY = cardY + 100, boxWidth = 340, boxHeight = 40;
                     graphics.setColor(Color.WHITE);
                     graphics.fillRect(boxX, boxY, boxWidth, boxHeight);
                     graphics.setColor(Color.BLACK);
                     graphics.drawRect(boxX, boxY, boxWidth, boxHeight);
-
-                    // the text typed so far, plus a blinking caret driven by the system clock
                     graphics.setFont(new Font("Arial", Font.PLAIN, 20));
                     String typed = resultBoard.getTypedName();
-                    boolean caretOn = (System.currentTimeMillis() / 500) % 2 == 0;
-                    graphics.drawString(typed + (caretOn ? "|" : ""), boxX + 8, boxY + 27);
-
-                    // hint
+                    graphics.drawString(typed , boxX + 8, boxY + 27);
                     graphics.setFont(new Font("Arial", Font.PLAIN, 16));
                     graphics.setColor(Color.WHITE);
                     graphics.drawString("Press Enter to start", boxX + 40, boxY + 75);

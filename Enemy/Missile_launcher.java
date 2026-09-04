@@ -10,9 +10,9 @@ import java.util.TimerTask;
 import java.util.Timer;
 
 public class Missile_launcher extends ArmyEnemy{
-    public Missile_launcher(int coordinates_x, int coordinates_y, Image launcher_img, int width , int height, Missile missile,
-                            String shooting_direction){
-        super(launcher_img,coordinates_x,coordinates_y,width,height,missile,shooting_direction);
+    public Missile_launcher(Image launcher_img,int coordinates_x, int coordinates_y, int width , int height,
+                            String shooting_direction,Missile missile){
+        super(launcher_img,coordinates_x,coordinates_y,width,height,shooting_direction,missile);
         this.missile = missile;
     }
 
@@ -22,24 +22,33 @@ public class Missile_launcher extends ArmyEnemy{
     public static Image getMissile_launcher(){
         return Missile_launcher;
     }
+
+    private static final Object[][] missileLauncherCoordinates = {
+            {Missile_launcher,160,300,30,30,"up"}
+    };
+
+    public static Object[][] getMissileLauncherCoordinates(){
+        return missileLauncherCoordinates;
+    }
+
     @Override
-    public ArrayList<Missile> getRocket_List(){
+    public ArrayList<Missile> getRocketList(){
         return  Missile_list;
     }
     @Override
-    public void Shooting_Rocket(){
+    public void shootingRocket(){
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                Missile_list.add(new Missile(missile.getPosition_coordinates_x(),missile.getPosition_coordinates_y(),
-                        missile.getRocket_bullet_img(),missile.getFinal_coordinates_x(),missile.getFinal_coordinates_y()));
+                Missile_list.add(new Missile(missile.getRocket_bullet_img(),missile.getPosition_coordinates_x(),missile.getPosition_coordinates_y(),
+                        missile.getFinal_coordinates_x(),missile.getFinal_coordinates_y()));
             }
         };
         timer.schedule(task,0,1500);
     }
     @Override
-    public void EditRocket_List(){
+    public void editRocketList(){
         for (int i =0; i< Missile_list.size(); i++){
             if (Missile_list.get(i).getPosition_coordinates_y() == Missile_list.get(i).getFinal_coordinates_y()){
                 Missile_list.remove(i);

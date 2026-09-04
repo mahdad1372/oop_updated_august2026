@@ -8,43 +8,40 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 public class TankEnemy extends ArmyEnemy {
-    public TankEnemy(Image tank_img, int coordinates_x, int coordinates_y, int width, int height, Tank_rocket rocket,String shooting_direction){
-        super(tank_img,coordinates_x,coordinates_y,width,height,rocket,shooting_direction);
+    public TankEnemy(Image tank_img, int coordinates_x, int coordinates_y, int width, int height,String shooting_direction,Tank_rocket rocket){
+        super(tank_img,coordinates_x,coordinates_y,width,height,shooting_direction,rocket);
         this.tank_rocket = rocket;
     }
 
     private static final Image tank_img = new ImageIcon ("Assets/tank.png").getImage();
-    public static Image getTank_img(){
-        return tank_img;
+    private static final Object[][] tank_enemy_coordinates = {
+            {tank_img,580,250,40,40,"up"}
+    };
+    public static Object[][] getTank_enemy_coordinates(){
+        return tank_enemy_coordinates;
     }
-    private Tank_rocket tank_rocket;
-    private ArrayList<Tank_rocket> TankRocketList = new ArrayList<>();
-    private static ArmyEnemy tankEnemy;
-    public static void setTankenemy(ArmyEnemy tank){
-         tankEnemy = tank;
-    }
-    public static ArmyEnemy getTankEnemy(){
-        return tankEnemy;
-    }
+    private final Tank_rocket tank_rocket;
+    private final ArrayList<Tank_rocket> TankRocketList = new ArrayList<>();
+
     @Override
-    public ArrayList<Tank_rocket> getRocket_List(){
+    public ArrayList<Tank_rocket> getRocketList(){
         return TankRocketList;
     }
     @Override
-    public void Shooting_Rocket(){
+    public void shootingRocket(){
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                TankRocketList.add(new Tank_rocket(tank_rocket.getPosition_coordinates_x(),tank_rocket.getPosition_coordinates_y(),
-                        tank_rocket.getRocket_bullet_img(),tank_rocket.getFinal_coordinates_x(),tank_rocket.getFinal_coordinates_y()));
+                TankRocketList.add(new Tank_rocket(tank_rocket.getRocket_bullet_img(),tank_rocket.getPosition_coordinates_x(),tank_rocket.getPosition_coordinates_y(),
+                        tank_rocket.getFinal_coordinates_x(),tank_rocket.getFinal_coordinates_y()));
 
             }
         };
         timer.schedule(task,0,1500);
     }
     @Override
-    public void EditRocket_List(){
+    public void editRocketList(){
         for (int i=0;i < TankRocketList.size();i++){
             if(TankRocketList.get(i).getPosition_coordinates_y() == TankRocketList.get(i).getFinal_coordinates_y()){
                 TankRocketList.remove(i);
