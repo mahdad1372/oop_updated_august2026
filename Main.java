@@ -1,11 +1,10 @@
-import Panel.MyPanel;
-import Results.resultBoard;
+import Panel.myPanel;
 
 import javax.swing.*;
 public class Main{
     public static void main(String[] args) {
         JFrame obj = new JFrame();
-        MyPanel board = new MyPanel();
+        myPanel board = new myPanel();
         obj.setBounds(10, 10, 950, 400);
         obj.setTitle("Pacman");
         obj.setResizable(false);

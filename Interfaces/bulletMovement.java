@@ -1,5 +1,5 @@
 package Interfaces;
 
-public interface bullet_movement {
+public interface bulletMovement {
     void shootingDirection(String direction);
 }

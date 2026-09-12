@@ -4,36 +4,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import Obstacles.Wall;
-import Obstacles.obstacleCreation;
-import Panel.MyPanel;
+import Panel.myPanel;
 public class resultBoard {
     private static JButton easyButton;
     private static JButton mediumButton;
     private static JButton hardButton;
-    public resultBoard(int x , int y , int width, int height, String result_board_type){
-        this.boardCoordinates_x = x;
-        this.boardCoordinates_y = y;
+    public resultBoard(int x , int y , int width, int height, String resultBoardType){
+        this.boardCoordinatesX = x;
+        this.boardCoordinatesY = y;
         this.width = width;
         this.height = height;
-        this.result_board_type = result_board_type;
+        this.resultBoardType = resultBoardType;
     }
-    private int boardCoordinates_x;
-    private int boardCoordinates_y;
+    private final int boardCoordinatesX;
+    private final int boardCoordinatesY;
     private final int width;
     private int height;
-    private static int Seconds_Duration_Game;
+    private static int secondsDurationGame;
     private static int score;
     private static int health = 100;
-    private static boolean display_menu_winner;
-    private static boolean display_name_menu = true;
-    private static boolean display_difficulty_menu = false;
-    private static int number_enemy_killed = 0;
+    private static boolean displayMenuWinner;
+    private static boolean displayNameMenu = true;
+    private static boolean displayDifficultyMenu = false;
+    private static int numberEnemyKilled = 0;
     private static String playerName = "";
     private static String difficulty = "";
-    private static StringBuilder typedName = new StringBuilder();
-    private static ArrayList<resultBoard> Result_boards = new ArrayList<>();
-    private final String result_board_type ;
+    private final static StringBuilder typedName = new StringBuilder();
+    private static ArrayList<resultBoard> resultBoards = new ArrayList<>();
+    private final String resultBoardType ;
     private static final Object[][] labelCoordinates = {
             {750,100, Color.blue,"score"},
             {750,130, Color.red,"health"},
@@ -71,7 +69,7 @@ public class resultBoard {
 
     private static void chooseDifficulty(String difficultyName, int startingHealth){
         resultBoard.setDifficulty(difficultyName, startingHealth);
-        resultBoard.setDisplay_difficulty_menu(false);
+        resultBoard.setDisplayDifficultyMenu(false);
         easyButton.setVisible(false);
         mediumButton.setVisible(false);
         hardButton.setVisible(false);
@@ -103,24 +101,24 @@ public class resultBoard {
         return height;
     }
 
-    public int getBoardCoordinates_x() {
-        return boardCoordinates_x;
+    public int getBoardCoordinatesX() {
+        return boardCoordinatesX;
     }
 
-    public int getBoardCoordinates_y() {
-        return boardCoordinates_y;
+    public int getBoardCoordinatesY() {
+        return boardCoordinatesY;
     }
-    public static boolean getdisplay_menu_winner() {
-        return display_menu_winner;
+    public static boolean getDisplayMenuWinner() {
+        return displayMenuWinner;
     }
-    public static void setdisplay_menu_winner(Boolean status) {
-        display_menu_winner = status;
+    public static void setDisplayMenuWinner(Boolean status) {
+        displayMenuWinner = status;
     }
-    public static boolean getDisplay_name_menu() {
-        return display_name_menu;
+    public static boolean getDisplayNameMenu() {
+        return displayNameMenu;
     }
-    public static void setDisplay_name_menu(boolean status) {
-        display_name_menu = status;
+    public static void setDisplayNameMenu(boolean status) {
+        displayNameMenu = status;
     }
     public static String getPlayerName() {
         return playerName;
@@ -141,11 +139,11 @@ public class resultBoard {
             typedName.deleteCharAt(typedName.length() - 1);
         }
     }
-    public static boolean getDisplay_difficulty_menu() {
-        return display_difficulty_menu;
+    public static boolean getDisplayDifficultyMenu() {
+        return displayDifficultyMenu;
     }
-    public static void setDisplay_difficulty_menu(boolean status) {
-        display_difficulty_menu = status;
+    public static void setDisplayDifficultyMenu(boolean status) {
+        displayDifficultyMenu = status;
     }
     public static String getDifficulty() {
         return difficulty;
@@ -153,29 +151,29 @@ public class resultBoard {
     public static void setDifficulty(String difficultyName, int startingHealth) {
         difficulty = difficultyName;
         health = startingHealth;
-        MyPanel.creation();
+        myPanel.creation();
     }
-    public static int getSeconds_Duration_Game() {
-        return Seconds_Duration_Game;
+    public static int getSecondsDurationGame() {
+        return secondsDurationGame;
     }
-    public static int getNumber_enemy_killed() {
-        return number_enemy_killed;
+    public static int getNumberEnemyKilled() {
+        return numberEnemyKilled;
     }
-    public String get_result_board_type() {
-        return result_board_type;
+    public String getResultBoardType() {
+        return resultBoardType;
     }
-    public static void setNumber_enemy_killed(int number) {
-        number_enemy_killed += number;
+    public static void setNumberEnemyKilled(int number) {
+        numberEnemyKilled += number;
     }
-    public static void setSeconds_Duration_Game(int seconds_Duration_Game) {
-        Seconds_Duration_Game = seconds_Duration_Game;
+    public static void setSecondsDurationGame(int seconds_Duration_Game) {
+        secondsDurationGame = seconds_Duration_Game;
     }
     public static ArrayList<resultBoard> getResult_boards() {
-        return Result_boards;
+        return resultBoards;
     }
 
     public static void setResult_boards(ArrayList<resultBoard> result_boards) {
-        Result_boards = result_boards;
+        resultBoards = result_boards;
     }
     public int getWidth() {
         return width;
@@ -184,7 +182,7 @@ public class resultBoard {
     public void setHeight(int height) {
         this.height = height;
     }
-    public static String get_num_enemy_time(int enemy_num , int time){
-        return  "In the " + time + " seconds you have killed " + enemy_num + " enemies" ;
-    }
+//    public static String getFinalResult(int enemy_num , int time){
+//        return  "In the " + time + " seconds you have killed " + enemy_num + " enemies" ;
+//    }
 }

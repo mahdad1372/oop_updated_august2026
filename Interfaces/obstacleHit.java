@@ -1,5 +1,5 @@
 package Interfaces;
 
-public interface obstacle_measurement {
+public interface obstacleHit {
     int damage();
 }
